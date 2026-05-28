@@ -12,8 +12,9 @@ import (
 // Config представляет конфигурацию приложения GophKeeper.
 type Config struct {
 	// ServRunAddr — URL сервера API.
-	ServRunAddr string
-	DBURI       string
+	ServRunAddr    string
+	DBURI          string
+	MasterPassword string
 }
 
 // NewConfig создаёт новый экземпляр конфигурации с значениями по умолчанию.
@@ -36,6 +37,7 @@ func (cfg *Config) ParseFlag() {
 
 	flag.StringVar(&cfg.ServRunAddr, "a", "localhost:8080", "address for start server")
 	flag.StringVar(&cfg.DBURI, "b", "", "address fot connect to DB")
+	flag.StringVar(&cfg.MasterPassword, "p", "MasterPassword", "master password")
 
 	// парсим переданные серверу аргументы в зарегистрированные переменные
 	flag.Parse()
@@ -46,13 +48,10 @@ func (cfg *Config) ParseFlag() {
 	if envDBURI, ok := os.LookupEnv("DATABASE_URI"); ok {
 		cfg.DBURI = envDBURI
 	}
-
+	if envPassword, ok := os.LookupEnv("MASTER_PASSWORD"); ok {
+		cfg.MasterPassword = envPassword
+	}
 }
-
-// const (
-// 	configDir = ".gophkeeper"
-// 	tokenFile = "auth_token"
-// )
 
 // SaveAuthToken сохраняет токен аутентификации в конфигурационный файл
 func SaveAuthToken(token string) error {

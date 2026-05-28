@@ -14,7 +14,6 @@ import (
 	"os"
 
 	"github.com/amfib87/go_musthave-GophKeeper/internal/client"
-	cl "github.com/amfib87/go_musthave-GophKeeper/internal/client"
 	"github.com/amfib87/go_musthave-GophKeeper/internal/config"
 	"github.com/spf13/cobra"
 )
@@ -44,18 +43,17 @@ func main() {
 	)
 
 	// Инициализируем HTTP‑клиент
-	client := client.NewHTTPClient(cfg)
+	clnt := client.NewHTTPClient(cfg)
 
 	rootCmd.AddCommand(
-		cl.RegisterCmd(client),
-		cl.LoginCmd(client),
+		client.RegisterCmd(clnt),
+		client.LoginCmd(clnt),
 
-		cl.ListCmd(client),
-		// cl.GetCmd(client),
-		cl.DeleteCmd(client),
-		cl.SyncCmd(client),
-		cl.VersionCmd(),
-		cl.UpdateCmd(client),
+		client.ListCmd(clnt),
+		client.DeleteCmd(clnt),
+		client.SyncCmd(clnt),
+		client.VersionCmd(),
+		client.UpdateCmd(clnt),
 	)
 
 	if err := rootCmd.Execute(); err != nil {

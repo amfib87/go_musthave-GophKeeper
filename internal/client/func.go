@@ -158,7 +158,7 @@ func GetCmd(cl *HTTPClient) *cobra.Command {
 			}
 
 			// Расшифровываем данные мастер‑паролем
-			decryptedData, err := crypto.DecryptData(data.Data, []byte(models.MasterPassword))
+			decryptedData, err := crypto.DecryptData(data.Data, []byte(cl.masterPassword))
 			if err != nil {
 				fmt.Printf("Decryption error: %v\n", err)
 				return

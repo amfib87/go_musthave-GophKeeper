@@ -303,7 +303,7 @@ func (h *Handler) CreateData(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// Шифруем данные перед сохранением
-	encryptedData, err := crypto.EncryptData([]byte(request.Data), []byte(models.MasterPassword))
+	encryptedData, err := crypto.EncryptData([]byte(request.Data), []byte(h.cfg.MasterPassword))
 
 	userData := &models.UserData{
 		ID:        uuid.New(),
@@ -442,7 +442,7 @@ func (h *Handler) UpdateData(res http.ResponseWriter, req *http.Request) {
 	existingData.Metadata = request.Metadata
 	existingData.Version++
 
-	if newData == false {
+	if !newData {
 		h.logger.Log.Debug("UpdateUserData")
 		if err := h.storage.UpdateUserData(req.Context(), existingData); err != nil {
 			h.logger.Log.Error("failed UpdateUserData", zap.Error(err))

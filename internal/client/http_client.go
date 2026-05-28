@@ -14,9 +14,10 @@ import (
 // HTTPClient представляет HTTP‑клиент для взаимодействия с сервером GophKeeper.
 // Содержит конфигурацию подключения и токен аутентификации.
 type HTTPClient struct {
-	baseURL string
-	token   string
-	client  *http.Client
+	baseURL        string
+	token          string
+	client         *http.Client
+	masterPassword string
 }
 
 // NewHTTPClient создаёт новый экземпляр HTTP‑клиента.
@@ -29,8 +30,9 @@ type HTTPClient struct {
 //	*HTTPClient — инициализированный клиент.
 func NewHTTPClient(cfg *config.Config) *HTTPClient {
 	return &HTTPClient{
-		baseURL: cfg.ServRunAddr,
-		client:  &http.Client{},
+		baseURL:        cfg.ServRunAddr,
+		client:         &http.Client{},
+		masterPassword: cfg.MasterPassword,
 	}
 }
 

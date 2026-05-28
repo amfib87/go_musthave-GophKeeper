@@ -80,7 +80,7 @@ func runMigrations(pool *pgxpool.Pool) error {
 }
 
 func (db *PostgresStorage) Close() {
-	db.Close()
+	db.DB.Close()
 }
 
 func (db *PostgresStorage) CreateUser(ctx context.Context, user *models.User) error {

@@ -6,8 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-const MasterPassword string = "Password"
-
 // UserData представляет данные пользователя в системе.
 // Содержит метаинформацию и зашифрованные пользовательские данные.
 type User struct {
